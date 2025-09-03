@@ -37,18 +37,17 @@ go build ./cmd/listnr
 ## Usage
 
 ### Navigation
-- `ESC`: Toggle between library explorer and playback controls
-- `←/→`: Navigate between sidebar and song list (explorer mode)
-- `←/→`: Seek backward/forward 5 seconds (controls mode)
-- `↑/↓`: Volume up/down (controls mode)
+- `ESC`: Close app.
+- `←/→`: Navigate between sidebar and song list.
+- `↑/↓`: Navigate list items,
 
 ### Playback
-- `SPACE`: Play/pause
-- `A`: Previous song
-- `D`: Next song
-- `Q`: Quit
-- `R`: Toggle repeat mode
-- `N`: Toggle autoplay mode
+- `SPACE`: Play/pause.
+- `A/D`: Seek backward/forward 5 seconds.
+- `Q/E`: Previous/next song.
+- `W/A`: Volume up/down.
+- `R`: Toggle repeat mode.
+- `N`: Toggle autoplay mode.
 
 ### Configuration
 

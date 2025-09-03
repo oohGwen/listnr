@@ -21,7 +21,6 @@ type App struct {
 	config   *config.Config
 
 	// UI state
-	focusMode       string
 	selectedSong    int
 	currentDir      *library.Directory
 	autoplayEnabled bool
@@ -47,11 +46,10 @@ func NewApp(cfg *config.Config, player *audio.Player, lib *library.Library) *App
 		tviewApp:        tview.NewApplication(),
 		player:          player,
 		library:         lib,
-		config:          cfg,
-		focusMode:       "explorer",
 		selectedSong:    0,
 		autoplayEnabled: true,
 		repeatMode:      false,
+		config:          cfg,
 	}
 
 	app.keyHandler = NewKeyHandler(app, player)
@@ -114,8 +112,7 @@ func (a *App) setupUI() {
 		AddItem(a.controls.TextView, 4, 0, false)
 
 	// Set initial focus
-	a.tviewApp.SetFocus(a.sidebar.List)
-	a.updateFocusDisplay()
+	a.FocusLeft()
 }
 
 func (a *App) populateLibrary() {
@@ -249,37 +246,16 @@ func (a *App) PreviousSong() {
 	a.songList.SetCurrentItem(newIndex)
 }
 
-// Focus management
-func (a *App) SetFocusMode(mode string) {
-	a.mu.Lock()
-	a.focusMode = mode
-	a.mu.Unlock()
-	a.updateFocusDisplay()
-}
-
-func (a *App) GetFocusMode() string {
-	a.mu.RLock()
-	defer a.mu.RUnlock()
-	return a.focusMode
-}
-
-func (a *App) updateFocusDisplay() {
-	focused := a.focusMode == "controls"
-	a.controls.SetFocused(focused)
-	a.sidebar.SetFocused(!focused)
-	a.songList.SetFocused(!focused)
-}
-
 func (a *App) FocusLeft() {
-	if a.focusMode == "explorer" {
-		a.tviewApp.SetFocus(a.sidebar.List)
-	}
+	a.tviewApp.SetFocus(a.sidebar.List)
+	a.sidebar.SetFocused(true)
+	a.songList.SetFocused(false)
 }
 
 func (a *App) FocusRight() {
-	if a.focusMode == "explorer" {
-		a.tviewApp.SetFocus(a.songList.List)
-	}
+	a.tviewApp.SetFocus(a.songList.List)
+	a.sidebar.SetFocused(false)
+	a.songList.SetFocused(true)
 }
 
 func (a *App) GetTviewApp() *tview.Application {

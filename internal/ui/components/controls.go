@@ -28,7 +28,9 @@ func NewControls() *Controls {
 		SetDynamicColors(true).
 		SetScrollable(false).
 		SetWrap(false).
-		SetBorder(true)
+		SetBorder(true).
+		SetBorderColor(tcell.ColorGray)
+	textView.SetDisabled(true)
 
 	controls := &Controls{
 		TextView: textView,
@@ -163,7 +165,7 @@ func (c *Controls) getControlsLine() string {
 		autoplayIcon = "[red][⏭ N][-]"
 	}
 
-	controls := fmt.Sprintf(" %s %s   [⏮ A] [%s SPACE] [⏭ D]  ",
+	controls := fmt.Sprintf(" %s %s   [⏮ Q] [⏪ A] [%s SPACE] [⏩ D] [⏭ E]  ",
 		repeatIcon, autoplayIcon, playIcon)
 
 	// Volume bar (10 segments)
@@ -178,7 +180,7 @@ func (c *Controls) getControlsLine() string {
 			volBar.WriteString("[dim]□[-]")
 		}
 	}
-	volBar.WriteString(fmt.Sprintf(" %d%% ↑↓]", int(c.volume*100)))
+	volBar.WriteString(fmt.Sprintf(" %d%% W/S]", int(c.volume*100)))
 
 	volumeStr := volBar.String()
 
@@ -193,12 +195,4 @@ func (c *Controls) getControlsLine() string {
 	}
 
 	return fmt.Sprintf("%s%s%s", controls, strings.Repeat(" ", spacing), volumeStr)
-}
-
-func (c *Controls) SetFocused(focused bool) {
-	if focused {
-		c.TextView.SetBorderColor(tcell.ColorYellow)
-	} else {
-		c.TextView.SetBorderColor(tcell.ColorWhite)
-	}
 }

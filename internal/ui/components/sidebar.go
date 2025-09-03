@@ -64,6 +64,6 @@ func (s *Sidebar) SetFocused(focused bool) {
 	if focused {
 		s.List.SetBorderColor(tcell.ColorWhite)
 	} else {
-		s.List.SetBorderColor(tcell.ColorDarkGray)
+		s.List.SetBorderColor(tcell.ColorGray)
 	}
 }

@@ -70,6 +70,6 @@ func (sl *SongList) SetFocused(focused bool) {
 	if focused {
 		sl.List.SetBorderColor(tcell.ColorWhite)
 	} else {
-		sl.List.SetBorderColor(tcell.ColorDarkGray)
+		sl.List.SetBorderColor(tcell.ColorGray)
 	}
 }
