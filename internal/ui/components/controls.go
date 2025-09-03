@@ -5,7 +5,7 @@ import (
 	"strings"
 	"time"
 
-	"listnr/internal/library"
+	"github.com/sammwyy/listnr/internal/library"
 
 	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"

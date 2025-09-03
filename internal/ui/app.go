@@ -4,11 +4,11 @@ import (
 	"context"
 	"sync"
 
-	"listnr/internal/audio"
-	"listnr/internal/config"
-	"listnr/internal/events"
-	"listnr/internal/library"
-	"listnr/internal/ui/components"
+	"github.com/sammwyy/listnr/internal/audio"
+	"github.com/sammwyy/listnr/internal/config"
+	"github.com/sammwyy/listnr/internal/events"
+	"github.com/sammwyy/listnr/internal/library"
+	"github.com/sammwyy/listnr/internal/ui/components"
 
 	"github.com/rivo/tview"
 )

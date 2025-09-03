@@ -1,9 +1,10 @@
 package events
 
 import (
-	"listnr/internal/library"
 	"sync"
 	"time"
+
+	"github.com/sammwyy/listnr/internal/library"
 )
 
 type EventType string

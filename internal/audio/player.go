@@ -5,8 +5,8 @@ import (
 	"sync"
 	"time"
 
-	"listnr/internal/events"
-	"listnr/internal/library"
+	"github.com/sammwyy/listnr/internal/events"
+	"github.com/sammwyy/listnr/internal/library"
 
 	"github.com/faiface/beep"
 	"github.com/faiface/beep/effects"
