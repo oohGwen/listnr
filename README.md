@@ -10,6 +10,7 @@ A modern, modular terminal-based music player written in Go.
 - 🎛️ Volume control with visual feedback
 - ⌨️ Vim-inspired keyboard shortcuts
 - 🎨 Clean, responsive TUI interface
+- 🎀 Audio visualizer
 
 ## Architecture
 

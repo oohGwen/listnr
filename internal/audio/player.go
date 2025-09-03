@@ -17,6 +17,7 @@ type Player struct {
 	// Audio components
 	sampleRate beep.SampleRate
 	streamer   beep.StreamSeekCloser
+	analyzer   *AudioAnalyzer
 	ctrl       *beep.Ctrl
 	volume     *effects.Volume
 	format     beep.Format
@@ -151,11 +152,14 @@ func (p *Player) play(song *library.Song) {
 		rs = streamer
 	}
 
+	// Setup audio analyzer
+	p.analyzer = NewAudioAnalyzer(rs, p.eventBus)
+
 	// Setup player components
 	p.streamer = streamer
 	p.format = format
 	p.currentSong = song
-	p.ctrl = &beep.Ctrl{Streamer: rs, Paused: false}
+	p.ctrl = &beep.Ctrl{Streamer: p.analyzer, Paused: false}
 	p.volume = &effects.Volume{
 		Streamer: p.ctrl,
 		Base:     2,
@@ -214,6 +218,7 @@ func (p *Player) stopInternal() {
 		p.streamer = nil
 		p.currentSong = nil
 		p.isPlaying = false
+		p.analyzer = nil
 
 		p.eventBus.Publish(events.Event{
 			Type: events.PlaybackPaused,

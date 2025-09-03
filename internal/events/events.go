@@ -10,12 +10,13 @@ import (
 type EventType string
 
 const (
-	SongChanged     EventType = "song_changed"
-	PlaybackPaused  EventType = "playback_paused"
-	PlaybackResumed EventType = "playback_resumed"
-	SongEnded       EventType = "song_ended"
-	ProgressUpdated EventType = "progress_updated"
-	VolumeChanged   EventType = "volume_changed"
+	SongChanged      EventType = "song_changed"
+	PlaybackPaused   EventType = "playback_paused"
+	PlaybackResumed  EventType = "playback_resumed"
+	SongEnded        EventType = "song_ended"
+	ProgressUpdated  EventType = "progress_updated"
+	VolumeChanged    EventType = "volume_changed"
+	AudioDataUpdated EventType = "audio_data_updated"
 )
 
 type Event struct {
@@ -43,6 +44,12 @@ type VolumeData struct {
 
 type SongEndedData struct {
 	Song *library.Song
+}
+
+type AudioData struct {
+	FrequencyBands []float64
+	Amplitude      float64
+	IsPlaying      bool
 }
 
 type EventBus struct {

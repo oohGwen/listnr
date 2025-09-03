@@ -44,7 +44,14 @@ func (kh *KeyHandler) handleGlobalKeys(event *tcell.EventKey) *tcell.EventKey {
 	case ' ':
 		kh.player.TogglePlayPause()
 		return nil
-	// Nexr/Prev song
+	// Seek song
+	case 'a', 'A':
+		kh.app.player.SeekBackward()
+		return nil
+	case 'd', 'D':
+		kh.app.player.SeekForward()
+		return nil
+	// Next/Prev song
 	case 'q', 'Q':
 		kh.app.PreviousSong()
 		return nil

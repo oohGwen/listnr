@@ -27,10 +27,11 @@ type App struct {
 	repeatMode      bool
 
 	// UI components
-	sidebar  *components.Sidebar
-	songList *components.SongList
-	controls *components.Controls
-	layout   *tview.Flex
+	sidebar    *components.Sidebar
+	songList   *components.SongList
+	controls   *components.Controls
+	visualizer *components.Visualizer
+	layout     *tview.Flex
 
 	// Event handling
 	ctx        context.Context
@@ -80,6 +81,9 @@ func (a *App) Stop() {
 	if a.cancel != nil {
 		a.cancel()
 	}
+	if a.visualizer != nil {
+		a.visualizer.Stop()
+	}
 	if a.tviewApp != nil {
 		a.tviewApp.Stop()
 	}
@@ -90,6 +94,7 @@ func (a *App) setupUI() {
 	a.sidebar = components.NewSidebar()
 	a.songList = components.NewSongList()
 	a.controls = components.NewControls()
+	a.visualizer = components.NewVisualizer()
 
 	// Sync data
 	a.controls.SetAutoplay(a.autoplayEnabled)
@@ -102,14 +107,19 @@ func (a *App) setupUI() {
 	// Populate data
 	a.populateLibrary()
 
-	// Layout setup
+	// Layout setup - Two column layout for the top and bottom section
 	topLayout := tview.NewFlex().SetDirection(tview.FlexColumn).
-		AddItem(a.sidebar.List, 0, 1, true).
-		AddItem(a.songList.List, 0, 3, false)
+		AddItem(a.sidebar.List, 0, 1, true).  // Up left
+		AddItem(a.songList.List, 0, 3, false) // Up right
 
+	bottomLayout := tview.NewFlex().SetDirection(tview.FlexColumn).
+		AddItem(a.visualizer.TextView, 0, 1, false). // Down left
+		AddItem(a.controls.TextView, 0, 3, false)    // Down right
+
+	// Main layout
 	a.layout = tview.NewFlex().SetDirection(tview.FlexRow).
-		AddItem(topLayout, 0, 1, true).
-		AddItem(a.controls.TextView, 4, 0, false)
+		AddItem(topLayout, 0, 1, true).    // Top section takes remaining space
+		AddItem(bottomLayout, 4, 0, false) // Controls fixed at 4 lines
 
 	// Set initial focus
 	a.FocusLeft()
@@ -149,6 +159,7 @@ func (a *App) handlePlayerEvents() {
 	pauseCh := a.player.EventBus().Subscribe(events.PlaybackPaused)
 	volumeCh := a.player.EventBus().Subscribe(events.VolumeChanged)
 	songEndedCh := a.player.EventBus().Subscribe(events.SongEnded)
+	audioCh := a.player.EventBus().Subscribe(events.AudioDataUpdated)
 
 	for {
 		select {
@@ -187,6 +198,12 @@ func (a *App) handlePlayerEvents() {
 		case event := <-songEndedCh:
 			if data, ok := event.Data.(events.SongEndedData); ok {
 				a.handleSongEnded(data.Song)
+			}
+		case event := <-audioCh:
+			if data, ok := event.Data.(events.AudioData); ok {
+				a.tviewApp.QueueUpdateDraw(func() {
+					a.visualizer.UpdateAudioData(data.FrequencyBands, data.Amplitude, data.IsPlaying)
+				})
 			}
 		}
 	}
