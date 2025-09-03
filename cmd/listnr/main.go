@@ -13,8 +13,8 @@ import (
 	"github.com/sammwyy/listnr/internal/library"
 	"github.com/sammwyy/listnr/internal/ui"
 
-	"github.com/faiface/beep"
-	"github.com/faiface/beep/speaker"
+	"github.com/gopxl/beep"
+	"github.com/gopxl/beep/speaker"
 )
 
 func main() {

@@ -8,9 +8,9 @@ import (
 	"github.com/sammwyy/listnr/internal/events"
 	"github.com/sammwyy/listnr/internal/library"
 
-	"github.com/faiface/beep"
-	"github.com/faiface/beep/effects"
-	"github.com/faiface/beep/speaker"
+	"github.com/gopxl/beep"
+	"github.com/gopxl/beep/effects"
+	"github.com/gopxl/beep/speaker"
 )
 
 type Player struct {
