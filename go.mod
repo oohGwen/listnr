@@ -1,4 +1,4 @@
-module listnr
+module github.com/sammwyy/listnr
 
 go 1.24.5
 

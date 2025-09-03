@@ -1,7 +1,7 @@
 package ui
 
 import (
-	"listnr/internal/audio"
+	"github.com/sammwyy/listnr/internal/audio"
 
 	"github.com/gdamore/tcell/v2"
 )

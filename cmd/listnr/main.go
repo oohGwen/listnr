@@ -8,10 +8,10 @@ import (
 	"syscall"
 	"time"
 
-	"listnr/internal/audio"
-	"listnr/internal/config"
-	"listnr/internal/library"
-	"listnr/internal/ui"
+	"github.com/sammwyy/listnr/internal/audio"
+	"github.com/sammwyy/listnr/internal/config"
+	"github.com/sammwyy/listnr/internal/library"
+	"github.com/sammwyy/listnr/internal/ui"
 
 	"github.com/faiface/beep"
 	"github.com/faiface/beep/speaker"
