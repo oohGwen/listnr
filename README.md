@@ -2,6 +2,8 @@
 
 A modern, modular terminal-based music player written in Go.
 
+![](./docs/assets/demo.gif)
+
 ## Features
 
 - 🎵 Support for MP3, WAV, FLAC, OGG, M4A formats
